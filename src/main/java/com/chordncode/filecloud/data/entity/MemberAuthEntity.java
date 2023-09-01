@@ -24,14 +24,14 @@ import lombok.NoArgsConstructor;
 @Table(name="MEMBER_AUTH")
 public class MemberAuthEntity {
     @Id
-    @Column(name="MEM_ID")
+    @Column(name="MEM_ID", nullable=false)
     private String memId;
 
     @Id
-    @Column(name="MEM_AUTH")
+    @Column(name="MEM_AUTH", nullable=false)
     private String memAuth;
 
     @ManyToOne
-    @JoinColumn(name="memberAuthList", insertable=false, updatable=false)
+    @JoinColumn(name="MEM_ID", insertable=false, updatable=false)
     private MemberEntity member;
 }

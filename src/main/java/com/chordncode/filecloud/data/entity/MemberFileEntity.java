@@ -27,29 +27,29 @@ import lombok.NoArgsConstructor;
 public class MemberFileEntity {
 
     @Id
-    @Column(name="MEM_ID")
+    @Column(name="MEM_ID", nullable=false)
     private String memId;
 
     @Id
-    @Column(name="FILE_SN")
+    @Column(name="FILE_SN", nullable=false)
     private Long fileSn;
 
     @Column(name="PARENT_FILE_SN")
     private Long parentFileSn;
 
-    @Column(name="SAVED_FILE_NAME")
+    @Column(name="SAVED_FILE_NAME", nullable=false)
     private String savedFileName;
 
     @Column(name="ORIGINAL_FILE_NAME")
     private String originalFileName;
 
-    @Column(name="FILE_SIZE")
+    @Column(name="FILE_SIZE", nullable=false)
     private Long fileSize;
     
-    @Column(name="DIR_YN")
+    @Column(name="DIR_YN", nullable=false)
     private String dirYn;
 
-    @Column(name="CREATED_AT")
+    @Column(name="CREATED_AT", nullable=false)
     private LocalDateTime createdAt;
 
     @ManyToOne

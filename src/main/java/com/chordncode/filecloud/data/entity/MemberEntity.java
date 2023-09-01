@@ -30,16 +30,16 @@ import lombok.NoArgsConstructor;
 public class MemberEntity implements UserDetails {
 
     @Id
-    @Column(name="MEM_ID")
+    @Column(name="MEM_ID", nullable=false)
     private String memId;
 
-    @Column(name="MEM_MAIL")
+    @Column(name="MEM_MAIL", nullable=false)
     private String memMail;
 
-    @Column(name="MEM_PW")
+    @Column(name="MEM_PW", nullable=false)
     private String memPw;
 
-    @Column(name="MEM_NM")
+    @Column(name="MEM_NM", nullable=false)
     private String memNm;
 
     @OneToMany(mappedBy="member", fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)

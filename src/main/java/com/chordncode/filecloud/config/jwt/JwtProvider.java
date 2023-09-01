@@ -76,7 +76,7 @@ public class JwtProvider {
 
     public boolean isValidToken(String token) {
         try {
-            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
+            return !Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
         } catch (Exception e) {
             return false;
         }
