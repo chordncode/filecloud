@@ -2,8 +2,11 @@ package com.chordncode.filecloud.data.entity;
 
 import java.time.LocalDateTime;
 
+import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -31,6 +34,7 @@ public class MemberFileEntity {
     private String memId;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="FILE_SN", nullable=false)
     private Long fileSn;
 
@@ -53,7 +57,7 @@ public class MemberFileEntity {
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name="memberFileList", insertable=false, updatable=false)
+    @JoinColumn(name="MEM_ID", insertable=false, updatable=false)
     private MemberEntity member;
     
 }

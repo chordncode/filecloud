@@ -56,6 +56,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberDto signin(MemberDto memberDto) {
         MemberEntity memberEntity = memberRepository.findByMemId(memberDto.getMemId());
+        if(memberEntity == null){
+            return null;
+        }
+        
         if(!passwordEncoder.matches(memberDto.getMemPw(), memberEntity.getMemPw())){
             return null;
         }

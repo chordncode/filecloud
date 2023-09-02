@@ -59,8 +59,12 @@ public class JwtProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(this.getMemId(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        try {
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(this.getMemId(token));
+            return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String resolveToken(HttpServletRequest request) {
