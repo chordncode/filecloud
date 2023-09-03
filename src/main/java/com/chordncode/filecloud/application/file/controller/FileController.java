@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,8 +25,8 @@ public class FileController {
     private final FileService fileService;
 
     @PostMapping("/file")
-    public ResultType upload(@ModelAttribute MultipartFile file, @ModelAttribute MemberFileDto fileDto) {
-        return fileService.upload(file, fileDto);
+    public ResultType upload(@ModelAttribute MultipartFile file, @RequestParam Long parentFileSn) {
+        return fileService.upload(file, parentFileSn);
     }
     
     @PostMapping("/directory")

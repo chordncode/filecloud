@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -45,7 +44,7 @@ public class FileServiceImpl implements FileService {
     private final FileRepository fileRepo;
     
     @Override
-    public ResultType upload(MultipartFile file, MemberFileDto fileDto) {
+    public ResultType upload(MultipartFile file, Long parentFileSn) {
         try {
             LocalDateTime now = LocalDateTime.now();
             File targetPath = new File(basicPath, DateTimeFormatter.ofPattern("yyyyMMdd").format(now));
@@ -56,7 +55,7 @@ public class FileServiceImpl implements FileService {
             file.transferTo(new File(targetPath, savedFileName).toPath());
             MemberFileEntity fileEntity = MemberFileEntity.builder()
                                                           .memId(SecurityContextHolder.getContext().getAuthentication().getName())
-                                                          .parentFileSn(fileDto.getParentFileSn())
+                                                          .parentFileSn(parentFileSn)
                                                           .savedFileName(savedFileName)
                                                           .originalFileName(file.getOriginalFilename())
                                                           .fileSize(file.getSize())
