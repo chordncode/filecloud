@@ -8,7 +8,8 @@ import com.chordncode.filecloud.config.util.ResultType;
 import com.chordncode.filecloud.data.dto.MemberFileDto;
 
 public interface FileService {
-    public ResultType upload(MultipartFile file, MemberFileDto fileDto);
-    public ResponseEntity<Resource> download(Long fileSn);
-    public ResultType delete(Long fileSn);
+    ResultType upload(MultipartFile file, MemberFileDto fileDto);
+    ResultType createDirectory(MemberFileDto fileDto);
+    ResponseEntity<Resource> download(Long fileSn);
+    ResultType delete(Long fileSn);
 }

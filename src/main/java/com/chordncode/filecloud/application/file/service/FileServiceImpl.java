@@ -47,7 +47,8 @@ public class FileServiceImpl implements FileService {
     @Override
     public ResultType upload(MultipartFile file, MemberFileDto fileDto) {
         try {
-            File targetPath = new File(basicPath, DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now()));
+            LocalDateTime now = LocalDateTime.now();
+            File targetPath = new File(basicPath, DateTimeFormatter.ofPattern("yyyyMMdd").format(now));
             if(!targetPath.exists()) {
                 targetPath.mkdir();
             }
@@ -60,12 +61,29 @@ public class FileServiceImpl implements FileService {
                                                           .originalFileName(file.getOriginalFilename())
                                                           .fileSize(file.getSize())
                                                           .dirYn("N")
-                                                          .createdAt(LocalDateTime.now())
+                                                          .createdAt(now)
                                                           .build();
 
             fileRepo.save(fileEntity);
             return ResultType.SUCCESS;
         } catch (Exception e) {}
+        return ResultType.FAILED;
+    }
+
+    @Override
+    public ResultType createDirectory(MemberFileDto fileDto) {
+        try {
+            MemberFileEntity fileEntity = MemberFileEntity.builder()
+                                                          .memId(SecurityContextHolder.getContext().getAuthentication().getName())
+                                                          .parentFileSn(fileDto.getParentFileSn())
+                                                          .savedFileName(fileDto.getSavedFileName())
+                                                          .fileSize(0L)
+                                                          .dirYn("Y")
+                                                          .createdAt(LocalDateTime.now())
+                                                          .build();
+            fileRepo.save(fileEntity);
+            return ResultType.SUCCESS;
+        } catch (Exception e) {e.printStackTrace();}
         return ResultType.FAILED;
     }
 
