@@ -12,4 +12,5 @@ public interface FileService {
     ResultType createDirectory(MemberFileDto fileDto);
     ResponseEntity<Resource> download(Long fileSn);
     ResultType delete(Long fileSn);
+    ResultType move(Long fileSn, MemberFileDto fileDto);
 }

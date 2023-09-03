@@ -119,6 +119,7 @@ public class FileServiceImpl implements FileService {
         FileOutputStream os = new FileOutputStream(basicPath + File.separator + zipFileName);
         ZipOutputStream zos = new ZipOutputStream(os);
         for(MemberFileEntity file : targetFileList) {
+            if(file.getDirYn().equals("Y")) continue;
             zos.putNextEntry(new ZipEntry(file.getOriginalFileName()));
             FileInputStream fis = new FileInputStream(new File(basicPath, DateTimeFormatter.ofPattern("yyyyMMdd").format(file.getCreatedAt()) + File.separator + file.getSavedFileName()));
             byte[] buffer = new byte[1024];
@@ -182,6 +183,23 @@ public class FileServiceImpl implements FileService {
                 fileRepo.deleteByMemIdAndFileSn(memId, fileSn);
                 return ResultType.SUCCESS;
             }
+        } catch (Exception e) {}
+        return ResultType.FAILED;
+    }
+
+    @Override
+    public ResultType move(Long fileSn, MemberFileDto fileDto) {
+        try {
+            MemberFileEntity fileEntity = fileRepo.findByMemIdAndFileSn(SecurityContextHolder.getContext().getAuthentication().getName(), fileSn);
+            if(fileEntity == null) throw new Exception();
+            if(fileDto.getParentFileSn() != null) {
+                fileEntity.setParentFileSn(fileDto.getParentFileSn());
+            }
+            if(fileDto.getOriginalFileName() != null) {
+                fileEntity.setOriginalFileName(fileDto.getOriginalFileName());
+            }
+            fileRepo.save(fileEntity);
+            return ResultType.SUCCESS;
         } catch (Exception e) {}
         return ResultType.FAILED;
     }
