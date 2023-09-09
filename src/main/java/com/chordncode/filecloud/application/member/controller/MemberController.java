@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,12 +35,12 @@ public class MemberController {
     @PostMapping("/signin")
     public ResultType signin(@RequestBody MemberDto memberDto, HttpServletResponse response) {
         MemberDto member = memberService.signin(memberDto);
-        if(member != null) {
+        if (member != null) {
             String token = jwtProvider.createToken(member.getMemId(), member.getMemberAuthList()
-                                                                            .stream()
-                                                                            .map(auth -> auth.getMemAuth())
-                                                                            .collect(Collectors.toList()));
-            
+                    .stream()
+                    .map(auth -> auth.getMemAuth())
+                    .collect(Collectors.toList()));
+
             Cookie tokenCookie = new Cookie("jwt", token);
             tokenCookie.setMaxAge(360);
             response.addCookie(tokenCookie);
@@ -49,9 +50,15 @@ public class MemberController {
     }
 
     @PostMapping("/mail")
-    public ResultType mail(@RequestBody Map <String, String> param) {
+    public ResultType mail(@RequestBody Map<String, String> param) {
         mailUtil.sendMail("", "the mail subject", param.get("mailbody"));
         return ResultType.SUCCESS;
+    }
+
+    @PostMapping("/id")
+    public MemberDto findId(@ModelAttribute MemberDto memberDto) {
+
+        return null;
     }
 
 }
