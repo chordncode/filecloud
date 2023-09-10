@@ -74,5 +74,10 @@ public class MemberServiceImpl implements MemberService {
                                                                               .build()).collect(Collectors.toList()))
                         .build();
     }
+
+    @Override
+    public MemberDto findId(MemberDto memberDto) {
+        return null;
+    }
     
 }
