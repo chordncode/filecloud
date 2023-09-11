@@ -33,7 +33,7 @@ public class MemberEntity implements UserDetails {
     @Column(name="MEM_ID", nullable=false)
     private String memId;
 
-    @Column(name="MEM_MAIL", nullable=false)
+    @Column(name="MEM_MAIL", nullable=false, unique=true)
     private String memMail;
 
     @Column(name="MEM_PW", nullable=false)

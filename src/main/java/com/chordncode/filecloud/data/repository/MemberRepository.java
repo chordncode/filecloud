@@ -6,4 +6,5 @@ import com.chordncode.filecloud.data.entity.MemberEntity;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, String> {
     MemberEntity findByMemId(String memId);
+    MemberEntity findMemIdByMemMail(String memMail);
 }

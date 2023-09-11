@@ -56,9 +56,8 @@ public class MemberController {
     }
 
     @PostMapping("/id")
-    public MemberDto findId(@ModelAttribute MemberDto memberDto) {
-
-        return null;
+    public MemberDto findId(@RequestBody MemberDto memberDto) {
+        return memberService.findId(memberDto);
     }
 
 }

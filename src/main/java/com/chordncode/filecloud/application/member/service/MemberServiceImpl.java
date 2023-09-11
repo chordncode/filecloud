@@ -77,7 +77,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDto findId(MemberDto memberDto) {
-        return null;
+        return MemberDto.builder()
+                        .memId(memberRepository.findMemIdByMemMail(memberDto.getMemMail()).getMemId())
+                        .build();
     }
     
 }

@@ -23,7 +23,7 @@ public class SecurityConfig {
         return http.httpBasic(basic -> basic.disable())
                    .csrf(csrf -> csrf.disable())
                    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                   .authorizeHttpRequests(request -> request.antMatchers("/signup", "/signin").permitAll()
+                   .authorizeHttpRequests(request -> request.antMatchers("/signup", "/signin", "/id").permitAll()
                                                             .anyRequest().hasRole("MEMBER"))
                    .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                    .build();
