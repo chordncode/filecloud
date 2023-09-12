@@ -25,7 +25,6 @@ public class MemberController {
 
     private final JwtProvider jwtProvider;
     private final MemberService memberService;
-    private final MailUtil mailUtil;
 
     @PostMapping("/signup")
     public ResultType signup(@RequestBody MemberDto memberDto) {
@@ -51,8 +50,7 @@ public class MemberController {
 
     @PostMapping("/mail")
     public ResultType mail(@RequestBody Map<String, String> param) {
-        mailUtil.sendMail("", "the mail subject", param.get("mailbody"));
-        return ResultType.SUCCESS;
+        return memberService.sendMail(param);
     }
 
     @PostMapping("/id")

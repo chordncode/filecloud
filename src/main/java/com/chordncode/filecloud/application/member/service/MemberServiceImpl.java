@@ -2,11 +2,13 @@ package com.chordncode.filecloud.application.member.service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.chordncode.filecloud.config.mail.MailUtil;
 import com.chordncode.filecloud.config.util.ResultType;
 import com.chordncode.filecloud.data.dto.MemberAuthDto;
 import com.chordncode.filecloud.data.dto.MemberDto;
@@ -23,6 +25,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+    private final MailUtil mailUtil;
 
     @Override
     public ResultType signup(MemberDto memberDto) {
@@ -76,10 +79,20 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public ResultType sendMail(Map<String, String> param) {
+        try {
+            mailUtil.sendMail(param.get("recipient"), param.get("subject"), param.get("mailbody"));
+            return ResultType.SUCCESS;
+        } catch (Exception e) {
+            return ResultType.FAILED;
+        }
+    }
+
+    @Override
     public MemberDto findId(MemberDto memberDto) {
         return MemberDto.builder()
                         .memId(memberRepository.findMemIdByMemMail(memberDto.getMemMail()).getMemId())
                         .build();
     }
-    
+
 }
