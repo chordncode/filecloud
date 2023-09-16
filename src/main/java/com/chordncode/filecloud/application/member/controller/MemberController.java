@@ -6,14 +6,12 @@ import java.util.stream.Collectors;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chordncode.filecloud.application.member.service.MemberService;
 import com.chordncode.filecloud.config.jwt.JwtProvider;
-import com.chordncode.filecloud.config.mail.MailUtil;
 import com.chordncode.filecloud.config.util.ResultType;
 import com.chordncode.filecloud.data.dto.MemberDto;
 
@@ -56,6 +54,11 @@ public class MemberController {
     @PostMapping("/id")
     public MemberDto findId(@RequestBody MemberDto memberDto) {
         return memberService.findId(memberDto);
+    }
+
+    @PostMapping("/password")
+    public ResultType resetPassword(@RequestBody MemberDto memberDto) {
+        return memberService.resetPassword(memberDto);
     }
 
 }

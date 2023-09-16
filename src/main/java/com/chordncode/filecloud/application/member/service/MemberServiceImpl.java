@@ -3,6 +3,7 @@ package com.chordncode.filecloud.application.member.service;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +16,9 @@ import com.chordncode.filecloud.data.dto.MemberDto;
 import com.chordncode.filecloud.data.entity.MemberAuthEntity;
 import com.chordncode.filecloud.data.entity.MemberEntity;
 import com.chordncode.filecloud.data.entity.MemberFileEntity;
+import com.chordncode.filecloud.data.entity.MemberResetEntity;
 import com.chordncode.filecloud.data.repository.MemberRepository;
+import com.chordncode.filecloud.data.repository.MemberResetRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +28,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+    private final MemberResetRepository memberResetRepository;
     private final MailUtil mailUtil;
 
     @Override
@@ -93,6 +97,21 @@ public class MemberServiceImpl implements MemberService {
         return MemberDto.builder()
                         .memId(memberRepository.findMemIdByMemMail(memberDto.getMemMail()).getMemId())
                         .build();
+    }
+
+    @Override
+    public ResultType resetPassword(MemberDto memberDto) {
+        Long isMemberExists = memberRepository.countByMemIdAndMemMail(memberDto.getMemId(), memberDto.getMemMail());
+        if(isMemberExists == 0) {
+            return ResultType.FAILED;
+        }
+
+        String memResetKey = UUID.randomUUID().toString();
+        memberResetRepository.save(MemberResetEntity.builder()
+                                                    .memId(memberDto.getMemId())
+                                                    .memResetKey(memResetKey)
+                                                    .build());
+        return ResultType.SUCCESS;
     }
 
 }

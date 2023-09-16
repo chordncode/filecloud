@@ -10,4 +10,5 @@ public interface MemberService {
     MemberDto signin(MemberDto memberDto);
     ResultType sendMail(Map<String, String> param);
     MemberDto findId(MemberDto memberDto);
+    ResultType resetPassword(MemberDto memberDto);
 }
