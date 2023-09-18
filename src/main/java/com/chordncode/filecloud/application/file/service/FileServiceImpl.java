@@ -155,10 +155,10 @@ public class FileServiceImpl implements FileService {
      * @return created responseEntity
      * @throws Exception
      */
-    private ResponseEntity<Resource> createResponseEntity(File targetFile, String OriginalFileName) throws Exception{
+    private ResponseEntity<Resource> createResponseEntity(File targetFile, String originalFileName) throws Exception{
         Resource targetFileResource = new FileSystemResource(targetFile.toPath());
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment;filename=\"" + new String(OriginalFileName.getBytes(StandardCharsets.UTF_8), "ISO-8859-1") + "\"");
+        headers.add("Content-Disposition", "attachment;filename=\"" + new String(originalFileName.getBytes(StandardCharsets.UTF_8), "ISO-8859-1") + "\"");
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         return new ResponseEntity<Resource>(targetFileResource, headers, HttpStatus.OK);
     }
