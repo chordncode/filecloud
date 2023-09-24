@@ -1,5 +1,7 @@
 package com.chordncode.filecloud.application.file.service;
 
+import java.util.List;
+
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +24,9 @@ public interface FileService {
      * @return SUCCESS : 1, FAILED : 0
      */
     ResultType createDirectory(MemberFileDto fileDto);
+
+
+    List<MemberFileDto> list();
 
     /**
      * make the client download the file or the zip file of the directory

@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -84,6 +85,22 @@ public class FileServiceImpl implements FileService {
             return ResultType.SUCCESS;
         } catch (Exception e) {e.printStackTrace();}
         return ResultType.FAILED;
+    }
+
+    @Override
+    public List<MemberFileDto> list() {
+        return fileRepo.findAllByMemId(SecurityContextHolder.getContext().getAuthentication().getName())
+                       .stream()
+                       .map(entity -> MemberFileDto.builder()
+                                                   .memId(entity.getMemId())
+                                                   .fileSn(entity.getFileSn())
+                                                   .parentFileSn(entity.getParentFileSn())
+                                                   .savedFileName(entity.getSavedFileName())
+                                                   .originalFileName(entity.getOriginalFileName())
+                                                   .fileSize(entity.getFileSize())
+                                                   .dirYn(entity.getDirYn())
+                                                   .createdAt(entity.getCreatedAt())
+                                                   .build()).collect(Collectors.toList());
     }
 
     @Override

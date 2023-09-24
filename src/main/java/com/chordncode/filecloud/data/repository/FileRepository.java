@@ -8,6 +8,7 @@ import com.chordncode.filecloud.data.entity.MemberFileEntity;
 import com.chordncode.filecloud.data.entity.key.MemberFileKey;
 
 public interface FileRepository extends JpaRepository<MemberFileEntity, MemberFileKey> {
+    List<MemberFileEntity> findAllByMemId(String memId);
     MemberFileEntity findByMemIdAndFileSn(String memId, Long fileSn);
     List<MemberFileEntity> findAllByMemIdAndParentFileSn(String memId, Long parentFileSn);
     void deleteByMemIdAndFileSn(String memId, Long fileSn);

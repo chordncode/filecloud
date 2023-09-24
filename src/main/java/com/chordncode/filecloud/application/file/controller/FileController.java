@@ -1,5 +1,7 @@
 package com.chordncode.filecloud.application.file.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +34,11 @@ public class FileController {
     @PostMapping("/directory")
     public ResultType createDirectory(@RequestBody MemberFileDto fileDto) {
         return fileService.createDirectory(fileDto);
+    }
+
+    @GetMapping("/file")
+    public List<MemberFileDto> list() {
+        return fileService.list();
     }
 
     @GetMapping("/file/{fileSn}")
