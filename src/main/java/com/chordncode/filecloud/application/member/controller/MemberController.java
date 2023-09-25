@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +44,21 @@ public class MemberController {
             response.addCookie(tokenCookie);
             return ResultType.SUCCESS;
         }
+        return ResultType.FAILED;
+    }
+
+    @PostMapping("/signout")
+    public ResultType signout(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Cookie[] cookies = request.getCookies();
+            for(Cookie cookie : cookies) {
+                if(cookie.getName().equals("jwt")) {
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                    return ResultType.SUCCESS;
+                }
+            }
+        } catch (Exception e) {}
         return ResultType.FAILED;
     }
 
